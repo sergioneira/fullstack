@@ -5,6 +5,8 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Category, Book
 from .serializers import CategorySerializer, BookSeralizer
+from bs4 import BeautifulSoup
+import requests
 
 # Create your views here.
 
