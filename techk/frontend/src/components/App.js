@@ -5,6 +5,7 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import Select from 'react-select';
 
 class App extends Component {
 
@@ -13,7 +14,8 @@ class App extends Component {
       this.state = {
           loading: false,
           books: [],
-          categories: []
+          categories: [],
+          selectedOption: null
       }
   }
 
@@ -25,11 +27,22 @@ class App extends Component {
 
       axios.get("http://localhost:8000/api/categories")
           .then(res => {
-              this.setState({categories: res.data});
+              let c = [];
+
+              res.data.forEach(ca => {
+                  c.push({value: ca.id, label: ca.name});
+              });
+
+              this.setState({categories: c});
           });
   }
 
-    showData = () => {
+  handleChange = (selectedOption) => {
+      this.setState({selectedOption});
+      console.log(selectedOption);
+  }
+
+  showData = () => {
       console.log('método funcionando');
       this.setState({loading: true});
       axios.get("http://localhost:8000/data")
@@ -44,7 +57,13 @@ class App extends Component {
 
       axios.get("http://localhost:8000/api/categories")
           .then(res => {
-              this.setState({categories: res.data});
+              let c = [];
+
+              res.data.forEach(ca => {
+                  c.push({value: ca.id, label: ca.name});
+              });
+
+              this.setState({categories: c});
           });
   };
 
@@ -70,37 +89,47 @@ class App extends Component {
     const columns = [
           {
             Header: "ID",
-            accessor: "id"
+            accessor: "id",
+            filterable: true
           },
           {
             Header: "Category",
-            accessor: "category"
+            accessor: "category",
+            filterable: true
           },
           {
             Header: "Price",
-            accessor: "price"
+            accessor: "price",
+            filterable: true
           },
           {
             Header: "Product Description",
-            accessor: "product_description"
+            accessor: "product_description",
+            filterable: true
           },
           {
             Header: "Stock",
-            accessor: "stock"
+            accessor: "stock",
+            filterable: true
           },
           {
             Header: "Title",
-            accessor: "title"
+            accessor: "title",
+            filterable: true
           },
           {
             Header: "Thumbnail",
-            accessor: "thumbnail"
+            accessor: "thumbnail",
+            filterable: true
           },
           {
             Header: "UPC",
-            accessor: "upc"
+            accessor: "upc",
+            filterable: true
           }
       ];
+
+    const {selectedOption} = this.state;
 
     return (
       <div className="App">
@@ -111,7 +140,16 @@ class App extends Component {
         <div>
             {loadingImg}
         </div>
-        <ReactTable columns={columns} data={this.state.books}>
+        <div className="row">
+            <div className="col-3">
+                <Select value={selectedOption}
+                    onChange={this.handleChange}
+                    options={this.state.categories}
+                    className="m-3"
+                />
+            </div>
+        </div>
+        <ReactTable columns={columns} data={this.state.books} filterable className="m-3">
         </ReactTable>
       </div>
     );
