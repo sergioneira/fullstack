@@ -6,7 +6,8 @@ from apps.scraper.models import Book
 
 
 def index(request):
-    charge_books()
+    print('accediendo')
+    #charge_books()
     return HttpResponse('Hello, world!')
 
 
