@@ -19,7 +19,7 @@ from django.contrib import admin
 from apps.base.views import index
 from rest_framework import routers
 from apps.scraper import views
-from apps.scraper.views import bring_data, filter_by_category
+from apps.scraper.views import bring_data
 
 router = routers.DefaultRouter()
 router.register(r'categories', views.CategoryView, 'category')
@@ -32,6 +32,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
     path('data/', bring_data),
-    path('books-category/<int:id>', filter_by_category),
     path('api/', include(router.urls))
 ]

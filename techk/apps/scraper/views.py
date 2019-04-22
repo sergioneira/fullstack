@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+
 from .models import Category, Book
 from .serializers import CategorySerializer, BookSeralizer
 from bs4 import BeautifulSoup
@@ -18,6 +20,15 @@ class CategoryView(viewsets.ModelViewSet):
 class BookView(viewsets.ModelViewSet):
     serializer_class = BookSeralizer
     queryset = Book.objects.all()
+
+    def destroy(self, request, pk=None):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.detele()
+
 
 def bring_data(request):
     source = requests.get('http://books.toscrape.com/index.html').text

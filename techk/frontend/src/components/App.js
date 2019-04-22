@@ -42,6 +42,13 @@ class App extends Component {
       this.setState({selectedOption});
   }
 
+  deleteBook = (id) => {
+      axios.delete("http://localhost:8000/api/books/" + id)
+          .then(res => {
+              console.log('deleted book ', res.data);
+          });
+  }
+
   showData = () => {
       console.log('método funcionando');
       this.setState({loading: true});
@@ -131,7 +138,7 @@ class App extends Component {
             Header: "Action",
             Cell: props => {
                 return (
-                    <button className="btn btn-danger">
+                    <button className="btn btn-danger" onClick={() => this.deleteBook(4133)}>
                         Delete
                     </button>
                 )
