@@ -50,11 +50,11 @@ class App extends Component {
   }
 
   showData = () => {
-      console.log('método funcionando');
       this.setState({loading: true});
       axios.get("http://localhost:8000/data")
           .then(res => {
               this.setState({loading: false});
+              document.location.reload(true);
          });
 
       axios.get("http://localhost:8000/api/books")
