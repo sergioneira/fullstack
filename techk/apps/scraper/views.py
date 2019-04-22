@@ -19,6 +19,10 @@ class BookView(viewsets.ModelViewSet):
     serializer_class = BookSeralizer
     queryset = Book.objects.all()
 
+def filter_by_category(request):
+    print('filtrando por categoria')
+    print(request)
+
 def bring_data(request):
     source = requests.get('http://books.toscrape.com/index.html').text
 

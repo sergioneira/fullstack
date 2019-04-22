@@ -22,6 +22,7 @@ class App extends Component {
   componentDidMount() {
       axios.get("http://localhost:8000/api/books")
           .then(res => {
+              console.log('books', res.data);
               this.setState({books: res.data});
           });
 
@@ -39,7 +40,10 @@ class App extends Component {
 
   handleChange = (selectedOption) => {
       this.setState({selectedOption});
-      console.log(selectedOption);
+      axios.get("http://localhost:8000/books-category/" + selectedOption.value)
+          .then(res => {
+              console.log('selected category ', res.data);
+          });
   }
 
   showData = () => {
@@ -126,6 +130,17 @@ class App extends Component {
             Header: "UPC",
             accessor: "upc",
             filterable: true
+          },
+          {
+            Header: "Action",
+            Cell: props => {
+                return (
+                    <button className="btn btn-danger">
+                        Delete
+                    </button>
+                )
+            },
+            filterable: false
           }
       ];
 
