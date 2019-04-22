@@ -19,11 +19,11 @@ from django.contrib import admin
 from apps.base.views import index
 from rest_framework import routers
 from apps.scraper import views
+from apps.scraper.views import bring_data
 
 router = routers.DefaultRouter()
 router.register(r'categories', views.CategoryView, 'category')
 router.register(r'books', views.BookView, 'book')
-
 
 urlpatterns = [
     #url(r'^admin/', admin.site.urls),
@@ -31,5 +31,6 @@ urlpatterns = [
     #url(r'^api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('', index),
+    path('data/', bring_data),
     path('api/', include(router.urls))
 ]
