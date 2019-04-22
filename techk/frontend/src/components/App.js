@@ -40,10 +40,6 @@ class App extends Component {
 
   handleChange = (selectedOption) => {
       this.setState({selectedOption});
-      axios.get("http://localhost:8000/books-category/" + selectedOption.value)
-          .then(res => {
-              console.log('selected category ', res.data);
-          });
   }
 
   showData = () => {
